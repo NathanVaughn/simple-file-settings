@@ -19,7 +19,7 @@
         },
         {
             "label": "tests",
-            "command": "poetry run pytest --cov=TODO/ --cov-report html",
+            "command": "poetry run pytest --cov=simplefilesettings/ --cov-report html",
             "type": "shell"
         }
     ]

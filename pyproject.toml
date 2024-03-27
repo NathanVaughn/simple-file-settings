@@ -1,14 +1,13 @@
 [tool.poetry]
-    name        = "TODOPROJECTNAME"
+    name        = "simple-file-settings"
     version     = "0.1.0"
-    description = "TODODESC"
+    description = "Access and updates settings from a file as a class."
     license     = "MIT"
     readme      = "README.md"
-    authors     = ["TODONAME <TODOEMAIL>"]
-    homepage    = "https://github.com/TODOREPO"
-    repository  = "https://github.com/TODOREPO.git"
-    # TODO DETERMINE
-    package-mode = false
+    authors     = ["Nathan Vaughn <nvaughn51@gmail.com>"]
+    homepage    = "https://github.com/NathanVaughn/simple-file-settings"
+    repository  = "https://github.com/NathanVaughn/simple-file-settings.git"
+    package-mode = true
 
 [tool.poetry.dependencies]
     python = "^3.12"
