@@ -1,0 +1,4 @@
+1. Replace items starting with TODO
+2. Run `poetry update`
+3. Run `pipx install pre-commit-update` and `pre-commit-update`
+4. Delete this file
