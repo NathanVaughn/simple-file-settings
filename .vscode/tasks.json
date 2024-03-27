@@ -8,7 +8,7 @@
         },
         {
             "label": "install",
-            "command": "poetry install --sync",
+            "command": "poetry install --sync --all-extras",
             "type": "shell"
         },
         {
