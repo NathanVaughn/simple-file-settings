@@ -20,51 +20,68 @@ class Dumper(typing.Protocol):
 class BaseClass(abc.ABC):
     def __init__(self):
         self.__field_type_hints = typing.get_type_hints(self)
-        self.__field_defaults = {
-            name: super().__getattribute__(name) for name in self.__field_type_hints
-        }
+        self.__field_defaults = {}
+
+        for name in self.__field_type_hints:
+            if name.startswith("_"):
+                raise AttributeError(
+                    f"Attribute '{name}' cannot start with an underscore"
+                )
+
+            try:
+                self.__field_defaults[name] = super().__getattribute__(name)
+            except AttributeError as e:
+                raise AttributeError(
+                    f"Missing default value for attribute '{name}'"
+                ) from e
+
+        self.__data = {}
 
     @property
     @abc.abstractmethod
     def _file(self) -> str: ...
 
-    def _read_base(self, loader: Loader, parsing_error: typing.Type[Exception]) -> dict:
+    def _read_base(self, loader: Loader, parsing_error: typing.Type[Exception]) -> None:
         # if the file does not exist, return an empty dict
         if not os.path.isfile(self._file):
-            return {}
+            self.__data = {}
+            return
 
         try:
             with open(self._file, "rb") as fp:
-                data = loader(fp)
+                fp_data = loader(fp)
 
             # if we got valid data, but it's not a dict, still trigger error
-            if not isinstance(data, dict):
+            if not isinstance(fp_data, dict):
                 raise ValueError
 
-            return data
+            self.__data = fp_data
+            return
 
         except (parsing_error, ValueError):
             # on invalid files, just delete it
             os.remove(self._file)
-            return {}
+            self.__data = {}
+            return
 
     @abc.abstractmethod
-    def _read(self) -> dict: ...
+    def _read(self) -> None: ...
 
-    def _write_base(self, data: dict, dumper: Dumper) -> None:
+    def _write_base(self, dumper: Dumper) -> None:
         with open(self._file, "w") as fp:
-            dumper(data, fp)
+            dumper(self.__data, fp)
 
     @abc.abstractmethod
-    def _write(self, data: dict) -> None: ...
+    def _write(self) -> None: ...
 
     def __get(self, key: str, type_hint: typing.Any, default: typing.Any) -> typing.Any:
         # read the file
-        data = self._read()
+        if self.Config.always_read or not self.__data:
+            self._read()
 
         # if the requested key is in the config, return it
-        if key in data:
-            value = data[key]
+        if key in self.__data:
+            value = self.__data[key]
 
             with contextlib.suppress(typeguard.TypeCheckError):
                 # make sure the value is of the correct type
@@ -79,9 +96,13 @@ class BaseClass(abc.ABC):
         return default
 
     def __set(self, key: str, value: typing.Any) -> None:
-        data = self._read()
-        data[key] = value
-        self._write(data)
+        # make sure we have the latest data
+        if self.Config.always_read:
+            self._read()
+
+        # set value
+        self.__data[key] = value
+        self._write()
 
     def __getattribute__(self, name: str) -> typing.Any:
         # private attribute or outside our scope access normally
@@ -100,3 +121,6 @@ class BaseClass(abc.ABC):
 
         # declared field
         self.__set(name, value)
+
+    class Config:
+        always_read: bool = True

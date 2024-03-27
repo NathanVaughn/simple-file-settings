@@ -16,14 +16,14 @@ class TOMLClass(BaseClass):
     def _file(self) -> PathLike:
         return self.Config.toml_file
 
-    def _read(self) -> dict:
+    def _read(self) -> None:
         return self._read_base(lambda fp: tomllib.load(fp), tomllib.TOMLDecodeError)
 
     def _dumper_wrapper(self, obj: dict, fp: typing.TextIO) -> None:
         fp.write(tomli_w.dumps(obj))
 
-    def _write(self, data: dict) -> None:
-        return self._write_base(data, self._dumper_wrapper)
+    def _write(self) -> None:
+        return self._write_base(self._dumper_wrapper)
 
-    class Config:
+    class Config(BaseClass.Config):
         toml_file: PathLike = os.path.join(os.getcwd(), "settings.toml")
