@@ -1,20 +1,29 @@
 [tool.poetry]
-    name        = "simple-file-settings"
-    version     = "0.1.0"
-    description = "Access and updates settings from a file as a class."
-    license     = "MIT"
-    readme      = "README.md"
-    authors     = ["Nathan Vaughn <nvaughn51@gmail.com>"]
-    homepage    = "https://github.com/NathanVaughn/simple-file-settings"
-    repository  = "https://github.com/NathanVaughn/simple-file-settings.git"
+    name         = "simple-file-settings"
+    version      = "0.1.0"
+    description  = "Access and updates settings from a file as a class."
+    license      = "MIT"
+    readme       = "README.md"
+    authors      = ["Nathan Vaughn <nvaughn51@gmail.com>"]
+    homepage     = "https://github.com/NathanVaughn/simple-file-settings"
+    repository   = "https://github.com/NathanVaughn/simple-file-settings.git"
     package-mode = true
+    packages     = [{ include = "simplefilesettings" }]
 
 [tool.poetry.dependencies]
-    python = "^3.12"
+    python    = "^3.12"
+    typeguard = "^4.2.1"
+    pyyaml    = { version = "^6.0.1", optional = true }
+    tomli-w   = { version = "^1.0.0", optional = true }
+    tomli     = { version = "^2.0.1", python = "<3.11", optional = true } # not needed in 3.11
 
 [tool.poetry.group.dev.dependencies]
     pytest     = "^7.4.3"
     pytest-cov = "^4.1.0"
+
+[tool.poetry.extras]
+    yaml = ["pyyaml"]
+    toml = ["tomli", "tomli-w"]
 
 [tool.coverage.run]
     omit = ["tests/*"]
