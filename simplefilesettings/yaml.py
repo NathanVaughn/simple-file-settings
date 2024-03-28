@@ -2,7 +2,7 @@ import os
 
 import yaml
 
-from ._base import BaseClass, PathLike
+from simplefilesettings._base import BaseClass, PathLike
 
 
 class YAMLClass(BaseClass):

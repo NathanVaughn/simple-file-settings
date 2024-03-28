@@ -5,10 +5,10 @@ import tomli_w
 
 try:
     import tomllib
-except ImportError:
-    import tomli as tomllib
+except ImportError:  # pragma: no cover
+    import tomli as tomllib  # type: ignore
 
-from ._base import BaseClass, PathLike
+from simplefilesettings._base import BaseClass, PathLike
 
 
 class TOMLClass(BaseClass):

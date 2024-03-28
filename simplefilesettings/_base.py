@@ -41,6 +41,14 @@ class BaseClass(abc.ABC):
     @abc.abstractmethod
     def _file(self) -> str: ...
 
+    @property
+    def _always_read(self) -> bool:
+        # sourcery skip: assign-if-exp, reintroduce-else, swap-if-else-branches
+        if not hasattr(self.Config, "always_read"):
+            return True
+
+        return self.Config.always_read  # type: ignore
+
     def _read_base(self, loader: Loader, parsing_error: typing.Type[Exception]) -> None:
         # if the file does not exist, return an empty dict
         if not os.path.isfile(self._file):
@@ -76,7 +84,7 @@ class BaseClass(abc.ABC):
 
     def __get(self, key: str, type_hint: typing.Any, default: typing.Any) -> typing.Any:
         # read the file
-        if self.Config.always_read or not self.__data:
+        if self._always_read or not self.__data:
             self._read()
 
         # if the requested key is in the config, return it
@@ -96,8 +104,11 @@ class BaseClass(abc.ABC):
         return default
 
     def __set(self, key: str, value: typing.Any) -> None:
+        # make sure value matches the type hint
+        typeguard.check_type(value, self.__field_type_hints[key])
+
         # make sure we have the latest data
-        if self.Config.always_read:
+        if self._always_read:
             self._read()
 
         # set value
@@ -123,4 +134,4 @@ class BaseClass(abc.ABC):
         self.__set(name, value)
 
     class Config:
-        always_read: bool = True
+        pass

@@ -1,7 +1,7 @@
 import json
 import os
 
-from ._base import BaseClass, PathLike
+from simplefilesettings._base import BaseClass, PathLike
 
 
 class JSONClass(BaseClass):

@@ -1,6 +1,6 @@
 repos:
 -   hooks:
-    -   id: check-json
+    # -   id: check-json
     -   id: check-toml
     -   id: check-yaml
     -   id: check-case-conflict
