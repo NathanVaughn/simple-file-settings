@@ -4,7 +4,7 @@ import typing
 import tomli_w
 
 try:
-    import tomllib
+    import tomllib  # type: ignore
 except ImportError:  # pragma: no cover
     import tomli as tomllib  # type: ignore
 
