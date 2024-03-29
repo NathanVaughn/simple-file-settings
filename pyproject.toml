@@ -1,6 +1,6 @@
 [tool.poetry]
     name         = "simple-file-settings"
-    version      = "0.1.1"
+    version      = "0.1.2"
     description  = "Access and updates settings from a file as a class."
     license      = "MIT"
     readme       = "README.md"

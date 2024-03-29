@@ -127,7 +127,7 @@ class _YSettings(YAMLClass):
 python -m pip install pipx --upgrade
 pipx ensurepath
 pipx install poetry
-pipx install simple-file-settings
+pipx install vscode-task-runner
 # (Optionally) Add pre-commit plugin
 poetry self add poetry-pre-commit-plugin
 ```
