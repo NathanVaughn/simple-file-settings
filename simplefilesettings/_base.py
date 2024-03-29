@@ -29,16 +29,11 @@ class BaseClass(abc.ABC):
 
             try:
                 self.__field_defaults[name] = super().__getattribute__(name)
-            except AttributeError as e:
-                raise AttributeError(
-                    f"Missing default value for attribute '{name}'"
-                ) from e
+            except AttributeError:
+                # items with no default set
+                self.__field_defaults[name] = None
 
         self.__data = {}
-
-    @property
-    @abc.abstractmethod
-    def _file(self) -> str: ...
 
     @property
     def _always_read(self) -> bool:

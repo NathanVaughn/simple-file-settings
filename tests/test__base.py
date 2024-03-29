@@ -6,19 +6,6 @@ import typeguard
 from simplefilesettings.json import JSONClass
 
 
-def test_attribute_missing_default() -> None:
-    """
-    Ensure that attributes without a default value raise an AttributeError.
-    """
-
-    class TestClass(JSONClass):
-        key1: int
-        key2: str = "default"
-
-    with pytest.raises(AttributeError):
-        TestClass()
-
-
 def test_empty_class() -> None:
     """
     Ensure that a class without any attributes raises an error.
@@ -226,3 +213,16 @@ def test_writing_value(temp_file: str) -> None:
     # make sure the values show up in the file
     with open(temp_file, "r") as fp:
         assert json.load(fp) == {"key1": "value1", "key2": "value2"}
+
+
+def test_handle_missing_default() -> None:
+    """
+    Ensure that missing default is None.
+    """
+
+    class TestClass(JSONClass):
+        key1: int
+        key2: str = "default"
+
+    tc = TestClass()
+    assert tc.key1 is None
