@@ -6,7 +6,6 @@ import typing
 import typeguard
 
 PathLike = typing.Union[str, os.PathLike]
-ParseFloat = typing.Callable[[str], typing.Any]
 
 
 class Loader(typing.Protocol):
