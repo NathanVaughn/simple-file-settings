@@ -8,6 +8,10 @@ on:
 
 jobs:
   build:
+    permissions:
+      actions: write
+      contents: write
+
     uses: NathanVaughn/reusable-actions/.github/workflows/pypi-build.yml@main
 
   publish:
