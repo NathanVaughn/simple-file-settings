@@ -1,7 +1,7 @@
 [tool.poetry]
     name         = "simple-file-settings"
     version      = "0.1.2"
-    description  = "Access and updates settings from a file as a class."
+    description  = "Easily load and save simple configuration data to and from disk through a type-checked data class."
     license      = "MIT"
     readme       = "README.md"
     authors      = ["Nathan Vaughn <nvaughn51@gmail.com>"]
