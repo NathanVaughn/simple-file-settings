@@ -1,9 +1,10 @@
 # Simple-File-Settings
 
-[![Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
 [![GitHub license](https://img.shields.io/github/license/NathanVaughn/simple-file-settings)](https://github.com/NathanVaughn/simple-file-settings/blob/main/LICENSE)
-[![PyPi versions](https://img.shields.io/pypi/pyversions/simple-file-settings)](https://pypi.org/project/simple-file-settings)
+[![PyPi version](https://img.shields.io/pypi/v/simple-file-settings.svg)](https://pypi.org/project/simple-file-settings)
+[![PyPi Python versions](https://img.shields.io/pypi/pyversions/simple-file-settings)](https://pypi.org/project/simple-file-settings)
 [![PyPi downloads](https://img.shields.io/pypi/dm/simple-file-settings)](https://pypi.org/project/simple-file-settings)
 
 ---
@@ -100,24 +101,31 @@ Settings.name = "Bob"
 
 Running this twice will print `John` the first time and `Bob` the second time.
 
-If JSON isn't your thing, TOML and YAML are available with the `[toml]` and `[yaml]`
-extras.
+If pure JSON isn't your thing, TOML, YAML, and JSON5 are available with the
+`[toml]`, `[yaml]`, `[json5]` extras, respectively.
 
 ```python
 from simplefilesettings.toml import TOMLClass
 from simplefilesettings.yaml import YAMLClass
+from simplefilesettings.json5 import JSON5Class
 
 class _TSettings(TOMLClass):
-    name: str = "John"
+    name: str = "Tom"
 
     class Config:
         toml_file = os.path.join(os.path.expanduser("~"), "config.toml")
 
 class _YSettings(YAMLClass):
-    name: str = "John"
+    name: str = "Ingy"
 
     class Config:
         yaml_file = os.path.join(os.path.expanduser("~"), "config.yaml")
+
+class _JSettings(JSON5Class):
+    name: str = "Douglas"
+
+    class Config:
+        json5_file = os.path.join(os.path.expanduser("~"), "config.jsonc")
 
 ```
 

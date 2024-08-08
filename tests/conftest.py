@@ -15,6 +15,7 @@ def temp_file(request: pytest.FixtureRequest) -> Generator[str, None, None]:
 
     # copy the file to a temporary location
     shutil.copy(base_file_path, temp_file_path)
+    print(temp_file_path)
 
     # yield the temporary file
     yield temp_file_path
