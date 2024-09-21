@@ -1,6 +1,7 @@
 name: Tests
 
 on:
+  workflow_dispatch:
   pull_request:
     branches:
       - main
@@ -16,6 +17,6 @@ jobs:
       matrix:
         python_version: ["3.12", "3.11", "3.10", "3.9"]
 
-    uses: NathanVaughn/reusable-actions/.github/workflows/python-test.yml@main
+    uses: NathanVaughn/reusable-actions/.github/workflows/python-test-uv.yml@main
     with:
       python_version: ${{ matrix.python_version }}
