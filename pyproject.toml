@@ -12,6 +12,7 @@
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
     ]
     requires-python = ">=3.9"
     dependencies = ["typeguard>=4.2.1"]
@@ -33,6 +34,7 @@
         "pytest>=8.3.3",
         "pytest-cov>=5.0.0",
     ]
+    package = true
 
 [tool.coverage.run]
     omit = ["tests/*"]
