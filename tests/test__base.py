@@ -1,3 +1,5 @@
+import datetime
+import enum
 import json
 
 import pytest
@@ -226,3 +228,25 @@ def test_handle_missing_default() -> None:
 
     tc = TestClass()
     assert tc.key1 is None
+
+
+@pytest.mark.parametrize("temp_file", [("valid_2.json")], indirect=["temp_file"])
+def test_valid_file_2(temp_file: str) -> None:
+    """
+    Ensure normal behavior works with enums and other types.
+    """
+
+    class TestEnum(enum.Enum):
+        A = "A"
+        B = "B"
+
+    class TestClass(JSONClass):
+        key1: TestEnum = TestEnum.B
+        key2: datetime.datetime = datetime.datetime(2021, 1, 1, 0, 0, 0)
+
+        class Config:
+            json_file = temp_file
+
+    tc = TestClass()
+    assert tc.key1 == TestEnum.A
+    assert tc.key2 == datetime.datetime(2024, 2, 3, 5, 3, 0)
