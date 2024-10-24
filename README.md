@@ -77,8 +77,14 @@ class _Settings(JSONClass):
     name: str = "John"
 ```
 
-Data types not serializable for the file format (JSON, TOML, YAML, see below)
-are not supported.
+Data types need to serializable for the selected file format
+(JSON, TOML, YAML, see below). The following additional types are also supported:
+
+- `datetime.datetime`
+- `datetime.date`
+- `datetime.time`
+- `datetime.timedelta`
+- `enum.Enum`
 
 By default, when any attribute is accessed, the configured file will be read.
 If the file does not exist, the default value will be used.
