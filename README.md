@@ -3,15 +3,14 @@
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
 [![GitHub license](https://img.shields.io/github/license/NathanVaughn/simple-file-settings)](https://github.com/NathanVaughn/simple-file-settings/blob/main/LICENSE)
-[![PyPi version](https://img.shields.io/pypi/v/simple-file-settings.svg)](https://pypi.org/project/simple-file-settings)
-[![PyPi Python versions](https://img.shields.io/pypi/pyversions/simple-file-settings)](https://pypi.org/project/simple-file-settings)
+[![PyPi versions](https://img.shields.io/pypi/pyversions/simple-file-settings)](https://pypi.org/project/simple-file-settings)
 [![PyPi downloads](https://img.shields.io/pypi/dm/simple-file-settings)](https://pypi.org/project/simple-file-settings)
 
 ---
 
 Sometimes, you just need to save and retain a few settings for your desktop program,
-like a theme preference, or last viewed directory. This is a library intended to easily
-load and save simple configuration data to and from disk through a
+like a theme preference, or last viewed directory. This is a library intended
+to easily load and save simple configuration data to and from disk through a
 type-checked data class.
 
 ## Usage
@@ -50,8 +49,8 @@ Settings.serial_port = "/dev/tty1"
 ```
 
 Inherit `simplefilesettings.json.JSONClass` and add class attributes with
-type hints and optionally default values. Attributes without type hints will not be
-loaded or saved. Attributes starting with an underscore will cause an error.
+type hints and optionally default values. Attributes without type hints will
+not be loaded or saved. Attributes starting with an underscore will cause an error.
 If a default is not provided, `None` is assumed.
 
 ```python
@@ -78,8 +77,14 @@ class _Settings(JSONClass):
     name: str = "John"
 ```
 
-Data types not serializable for the file format (JSON, TOML, YAML, see below)
-are not supported.
+Data types need to serializable for the selected file format
+(JSON, TOML, YAML, see below). The following additional types are also supported:
+
+- `datetime.datetime`
+- `datetime.date`
+- `datetime.time`
+- `datetime.timedelta`
+- `enum.Enum`
 
 By default, when any attribute is accessed, the configured file will be read.
 If the file does not exist, the default value will be used.
@@ -131,11 +136,12 @@ class _JSettings(JSON5Class):
 
 ## Development
 
+Use the provided [devcontainer](https://containers.dev/)
+or run the following for local development:
+
 ```bash
-python -m pip install pipx --upgrade
-pipx ensurepath
-pipx install poetry
-pipx install vscode-task-runner
-# (Optionally) Add pre-commit plugin
-poetry self add poetry-pre-commit-plugin
+# Install uv
+# https://docs.astral.sh/uv/getting-started/installation/
+uv tool install vscode-task-runner
+vtr install
 ```

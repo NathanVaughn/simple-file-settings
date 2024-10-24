@@ -5,6 +5,8 @@ import typing
 
 import typeguard
 
+import simplefilesettings.serializer
+
 PathLike = typing.Union[str, os.PathLike]
 
 
@@ -33,7 +35,7 @@ class BaseClass(abc.ABC):
                 # items with no default set
                 self.__field_defaults[name] = None
 
-        self.__data = {}
+        self.__data: typing.Dict[str, typing.Any] = {}
 
     @property
     def _always_read(self) -> bool:
@@ -70,8 +72,14 @@ class BaseClass(abc.ABC):
     def _read(self) -> None: ...
 
     def _write_base(self, dumper: Dumper) -> None:
+        # serialize values
+        serializable_data = {
+            key: simplefilesettings.serializer.serialize(value)
+            for key, value in self.__data.items()
+        }
+
         with open(self._file, "w") as fp:
-            dumper(self.__data, fp)
+            dumper(serializable_data, fp)
 
     @abc.abstractmethod
     def _write(self) -> None: ...
@@ -83,7 +91,10 @@ class BaseClass(abc.ABC):
 
         # if the requested key is in the config, return it
         if key in self.__data:
-            value = self.__data[key]
+            # deserialize the value
+            value = simplefilesettings.serializer.deserialize(
+                self.__data[key], type_hint=type_hint
+            )
 
             with contextlib.suppress(typeguard.TypeCheckError):
                 # make sure the value is of the correct type
