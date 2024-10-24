@@ -9,7 +9,7 @@ def _serialize_enum(obj: enum.Enum) -> str:
     return obj.value
 
 
-def _deserialize_enum(value: int | str, obj: typing.Type[T]) -> T:
+def _deserialize_enum(value: typing.Union[int, str], obj: typing.Type[T]) -> T:
     return obj(value)
 
 
