@@ -1,8 +1,12 @@
 import datetime
 import enum
+import pathlib
 import typing
 
 T = typing.TypeVar("T", bound=enum.Enum)
+
+
+# region: enum
 
 
 def _serialize_enum(obj: enum.Enum) -> str:
@@ -11,6 +15,10 @@ def _serialize_enum(obj: enum.Enum) -> str:
 
 def _deserialize_enum(value: typing.Union[int, str], obj: typing.Type[T]) -> T:
     return obj(value)
+
+
+# endregion
+# region: datetime
 
 
 def _serialize_datetime(dt: datetime.datetime) -> str:
@@ -45,6 +53,21 @@ def _deserialize_time(value: str) -> datetime.time:
     return datetime.time.fromisoformat(value)
 
 
+# endregion
+# region: pathlib
+
+
+def _serialize_pathlib(obj: pathlib.Path) -> str:
+    return str(obj)
+
+
+def _deserialize_pathlib(value: str) -> pathlib.Path:
+    return pathlib.Path(value)
+
+
+# endregion
+
+
 def serialize(value: typing.Any) -> typing.Any:
     if isinstance(value, enum.Enum):
         return _serialize_enum(value)
@@ -56,6 +79,8 @@ def serialize(value: typing.Any) -> typing.Any:
         return _serialize_date(value)
     elif isinstance(value, datetime.time):
         return _serialize_time(value)
+    elif isinstance(value, pathlib.Path):
+        return _serialize_pathlib(value)
     return value
 
 
@@ -70,4 +95,6 @@ def deserialize(value: typing.Any, type_hint: typing.Any) -> typing.Any:
         return _deserialize_date(value)
     elif type_hint == datetime.time:
         return _deserialize_time(value)
+    elif type_hint == pathlib.Path:
+        return _deserialize_pathlib(value)
     return value

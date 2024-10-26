@@ -120,6 +120,44 @@ def test_handle_invalid_field_type_file(temp_file: str) -> None:
 
 
 @pytest.mark.parametrize("temp_file", [("valid.json")], indirect=["temp_file"])
+def test_invalid_enum_file(temp_file: str) -> None:
+    """
+    Ensure that files with invalid enum values are ignored.
+    """
+
+    class TestEnum(enum.Enum):
+        A = "A"
+        B = "B"
+
+    class TestClass(JSONClass):
+        key1: TestEnum = TestEnum.B
+
+        class Config:
+            json_file = temp_file
+
+    # make sure the default value is used
+    tc = TestClass()
+    assert tc.key1 == TestEnum.B
+
+
+@pytest.mark.parametrize("temp_file", [("valid.json")], indirect=["temp_file"])
+def test_invalid_datetime_file(temp_file: str) -> None:
+    """
+    Ensure that files with invalid datetime values are ignored.
+    """
+
+    class TestClass(JSONClass):
+        key1: datetime.datetime = datetime.datetime(2021, 1, 1, 0, 0, 0)
+
+        class Config:
+            json_file = temp_file
+
+    # make sure the default value is used
+    tc = TestClass()
+    assert tc.key1 == datetime.datetime(2021, 1, 1, 0, 0, 0)
+
+
+@pytest.mark.parametrize("temp_file", [("valid.json")], indirect=["temp_file"])
 def test_valid_file(temp_file: str) -> None:
     """
     Ensure normal behavior works.

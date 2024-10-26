@@ -91,17 +91,17 @@ class BaseClass(abc.ABC):
 
         # if the requested key is in the config, return it
         if key in self.__data:
-            # deserialize the value
-            value = simplefilesettings.serializer.deserialize(
-                self.__data[key], type_hint=type_hint
-            )
+            with contextlib.suppress(typeguard.TypeCheckError, ValueError):
+                # deserialize the value
+                value = simplefilesettings.serializer.deserialize(
+                    self.__data[key], type_hint=type_hint
+                )
 
-            with contextlib.suppress(typeguard.TypeCheckError):
                 # make sure the value is of the correct type
-                # otherwise, return the default
                 typeguard.check_type(value, type_hint)
                 return value
 
+        # otherwise, return the default
         # if we have a set default value that is not None, write it out
         if default is not None:
             self.__set(key, default)
@@ -127,7 +127,9 @@ class BaseClass(abc.ABC):
 
         # declared field
         return self.__get(
-            name, self.__field_type_hints[name], self.__field_defaults[name]
+            key=name,
+            type_hint=self.__field_type_hints[name],
+            default=self.__field_defaults[name],
         )
 
     def __setattr__(self, name: str, value: typing.Any) -> None:
