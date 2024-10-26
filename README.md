@@ -85,6 +85,7 @@ Data types need to serializable for the selected file format
 - `datetime.time`
 - `datetime.timedelta`
 - `enum.Enum`
+- `pathlib.Path`
 
 By default, when any attribute is accessed, the configured file will be read.
 If the file does not exist, the default value will be used.

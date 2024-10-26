@@ -1,5 +1,6 @@
 import datetime
 import enum
+import pathlib
 import sys
 import typing
 
@@ -67,6 +68,12 @@ def test_time() -> None:
     assert simplefilesettings.serializer._deserialize_time(t.isoformat()) == t
 
 
+def test_pathlib() -> None:
+    p = pathlib.Path(__file__)
+    assert simplefilesettings.serializer._serialize_pathlib(p) == str(p)
+    assert simplefilesettings.serializer._deserialize_pathlib(str(p)) == p
+
+
 @pytest.mark.parametrize(
     "given, expected",
     (
@@ -77,6 +84,7 @@ def test_time() -> None:
         (datetime.timedelta(days=1, hours=2, minutes=3, seconds=4), 93784.0),
         (datetime.datetime(2021, 1, 1).date(), "2021-01-01"),
         (datetime.datetime(2021, 1, 1).time(), "00:00:00"),
+        (pathlib.Path(__file__), str(pathlib.Path(__file__))),
     ),
 )
 def test_serializer(given: typing.Any, expected: typing.Any) -> None:
@@ -101,6 +109,7 @@ def test_serializer(given: typing.Any, expected: typing.Any) -> None:
         ),
         ("2021-01-01", datetime.date, datetime.datetime(2021, 1, 1).date()),
         ("00:00:00", datetime.time, datetime.datetime(2021, 1, 1).time()),
+        (str(pathlib.Path(__file__)), pathlib.Path, pathlib.Path(__file__)),
     ),
 )
 def test_deserializer(
