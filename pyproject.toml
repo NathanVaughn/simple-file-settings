@@ -1,6 +1,6 @@
 [project]
     name = "simple-file-settings"
-    version = "0.1.5"
+    version = "0.1.6"
     description = "Easily load and save simple configuration data to and from disk through a type-checked data class."
     readme = "README.md"
     authors = [{ name = "Nathan Vaughn", email = "nath@nvaughn.email" }]

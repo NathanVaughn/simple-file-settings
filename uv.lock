@@ -380,7 +380,7 @@ wheels = [
 
 [[package]]
 name = "simple-file-settings"
-version = "0.1.5"
+version = "0.1.6"
 source = { editable = "." }
 dependencies = [
     { name = "typeguard" },
@@ -398,7 +398,7 @@ yaml = [
     { name = "pyyaml" },
 ]
 
-[package.dependency-groups]
+[package.dev-dependencies]
 dev = [
     { name = "pre-commit" },
     { name = "pytest" },
@@ -414,7 +414,7 @@ requires-dist = [
     { name = "typeguard", specifier = ">=4.2.1" },
 ]
 
-[package.metadata.dependency-groups]
+[package.metadata.requires-dev]
 dev = [
     { name = "pre-commit", specifier = ">=3.2.0" },
     { name = "pytest", specifier = ">=8.3.3" },
