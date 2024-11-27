@@ -2,6 +2,7 @@ import datetime
 import enum
 import json
 
+import typing
 import pytest
 import typeguard
 
@@ -288,3 +289,20 @@ def test_valid_file_2(temp_file: str) -> None:
     tc = TestClass()
     assert tc.key1 == TestEnum.A
     assert tc.key2 == datetime.datetime(2024, 2, 3, 5, 3, 0)
+
+
+@pytest.mark.parametrize("temp_file", [("valid.json")], indirect=["temp_file"])
+def test_valid_file_3(temp_file: str) -> None:
+    """
+    Ensure normal behavior works with Literal type hint
+    """
+
+    class TestClass(JSONClass):
+        key1: str = "value1"
+        key2: typing.Literal["value1", "value2"] = "value1"
+
+        class Config:
+            json_file = temp_file
+
+    tc = TestClass()
+    assert tc.key2 == "value2"
