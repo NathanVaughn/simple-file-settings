@@ -2,6 +2,7 @@ import datetime
 import enum
 import pathlib
 import typing
+import inspect
 
 T = typing.TypeVar("T", bound=enum.Enum)
 
@@ -85,7 +86,9 @@ def serialize(value: typing.Any) -> typing.Any:
 
 
 def deserialize(value: typing.Any, type_hint: typing.Any) -> typing.Any:
-    if issubclass(type_hint, enum.Enum):
+    # https://stackoverflow.com/a/395782/9944427
+    # Fixes bug where typing.Literal as a type hint would error
+    if inspect.isclass(type_hint) and issubclass(type_hint, enum.Enum):
         return _deserialize_enum(value, type_hint)
     elif type_hint == datetime.datetime:
         return _deserialize_datetime(value)
