@@ -290,6 +290,7 @@ def test_valid_file_2(temp_file: str) -> None:
     assert tc.key1 == TestEnum.A
     assert tc.key2 == datetime.datetime(2024, 2, 3, 5, 3, 0)
 
+
 @pytest.mark.parametrize("temp_file", [("valid.json")], indirect=["temp_file"])
 def test_valid_file_3(temp_file: str) -> None:
     """
