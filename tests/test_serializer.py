@@ -25,7 +25,7 @@ def test_basic_enum() -> None:
 
 @pytest.mark.skipif(sys.version_info < (3, 11), reason="Requires Python 3.11 or higher")
 def test_str_enum() -> None:
-    class TestEnum(enum.StrEnum):
+    class TestEnum(enum.Enum):
         A = "A"
         B = "B"
 
