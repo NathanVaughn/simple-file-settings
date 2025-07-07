@@ -42,10 +42,11 @@
     venv                       = ".venv"
     reportMissingParameterType = true
 
-[build-system]
-    requires      = ["hatchling"]
-    build-backend = "hatchling.build"
+[tool.uv.build-backend]
+    # keep this for backwards compatibility
+    module-name = "simplefilesettings"
+    module-root = ""
 
-[tool.hatch.build.targets.wheel]
-    # fixing this would break import compatibility
-    packages = ["simplefilesettings"]
+[build-system]
+    requires      = ["uv_build>=0.7.15"]
+    build-backend = "uv_build"
