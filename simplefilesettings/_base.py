@@ -20,7 +20,11 @@ class Dumper(typing.Protocol):
 
 class BaseClass(abc.ABC):
     def __init__(self):
-        self.__field_type_hints = typing.get_type_hints(self)
+        self.__field_type_hints = typing.get_type_hints(type(self))
+
+        if not self.__field_type_hints:
+            raise TypeError("At least one field must be defined")
+
         self.__field_defaults = {}
 
         for name in self.__field_type_hints:
