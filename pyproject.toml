@@ -1,6 +1,6 @@
 [project]
     name = "simple-file-settings"
-    version = "0.1.6"
+    version = "0.1.7"
     description = "Easily load and save simple configuration data to and from disk through a type-checked data class."
     readme = "README.md"
     authors = [{ name = "Nathan Vaughn", email = "nath@nvaughn.email" }]
@@ -13,6 +13,7 @@
         "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",
         "Programming Language :: Python :: 3.13",
+        "Programming Language :: Python :: 3.14",
     ]
     requires-python = ">=3.9"
     dependencies = ["typeguard>=4.2.1"]
@@ -42,10 +43,11 @@
     venv                       = ".venv"
     reportMissingParameterType = true
 
-[build-system]
-    requires      = ["hatchling"]
-    build-backend = "hatchling.build"
+[tool.uv.build-backend]
+    # keep this for backwards compatibility
+    module-name = "simplefilesettings"
+    module-root = ""
 
-[tool.hatch.build.targets.wheel]
-    # fixing this would break import compatibility
-    packages = ["simplefilesettings"]
+[build-system]
+    requires      = ["uv_build>=0.7.15"]
+    build-backend = "uv_build"
