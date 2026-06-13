@@ -19,7 +19,7 @@ class Dumper(typing.Protocol):
 
 
 class BaseClass(abc.ABC):
-    def __init__(self):
+    def __init__(self) -> None:
         self.__field_type_hints = typing.get_type_hints(type(self))
 
         if not self.__field_type_hints:
@@ -47,7 +47,7 @@ class BaseClass(abc.ABC):
         if not hasattr(self.Config, "always_read"):
             return True
 
-        return self.Config.always_read  # type: ignore
+        return self.Config.always_read  # pyright: ignore[reportAttributeAccessIssue]
 
     def _read_base(self, loader: Loader, parsing_error: typing.Type[Exception]) -> None:
         # if the file does not exist, return an empty dict
