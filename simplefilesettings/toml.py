@@ -4,9 +4,9 @@ import typing
 import tomli_w
 
 try:
-    import tomllib  # type: ignore
+    import tomllib  # ty:ignore[unresolved-import]
 except ImportError:  # pragma: no cover
-    import tomli as tomllib  # type: ignore
+    import tomli as tomllib  # ty:ignore[unresolved-import]
 
 from simplefilesettings._base import BaseClass, PathLike
 
