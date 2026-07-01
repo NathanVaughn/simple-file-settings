@@ -1,8 +1,8 @@
 import datetime
 import enum
 import json
-
 import typing
+
 import pytest
 import typeguard
 
@@ -47,7 +47,7 @@ def test_wrong_set_attribute() -> None:
     tc = TestClass()
 
     with pytest.raises(typeguard.TypeCheckError):
-        tc.key1 = True  # type: ignore
+        tc.key1 = True  # ty:ignore[invalid-assignment]
 
 
 @pytest.mark.parametrize("temp_file", [("invalid_syntax.json")], indirect=["temp_file"])
