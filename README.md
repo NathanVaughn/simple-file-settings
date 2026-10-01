@@ -25,6 +25,7 @@ pip install simple-file-settings
 import os
 from simplefilesettings.json import JSONClass
 
+
 class _Settings(JSONClass):
     class Config:
         json_file = os.path.join(os.path.expanduser("~"), "config.json")
@@ -38,6 +39,7 @@ class _Settings(JSONClass):
     joystick_inverted: bool = False
     max_moving_map_tracks: int = 5000
     takeoff_height: float = 3
+
 
 Settings = _Settings()
 
@@ -56,10 +58,11 @@ If a default is not provided, `None` is assumed.
 ```python
 from simplefilesettings.json import JSONClass
 
+
 class _Settings(JSONClass):
     name: str = "John"  # valid
-    age = 26 # invalid
-    _height_cm: int # invalid
+    age = 26  # invalid
+    _height_cm: int  # invalid
 ```
 
 By default, a JSON file called `settings.json` in the current working directory
@@ -69,6 +72,7 @@ is used. To change this, add a nested class called `Config` with an attribute
 ```python
 import os
 from simplefilesettings.json import JSONClass
+
 
 class _Settings(JSONClass):
     class Config:
@@ -97,8 +101,10 @@ When any attribute has its value set, that will be written to the configured fil
 ```python
 from simplefilesettings.json import JSONClass
 
+
 class _Settings(JSONClass):
     name: str = "John"
+
 
 Settings = _Settings()
 print(Settings.name)
@@ -115,11 +121,13 @@ from simplefilesettings.toml import TOMLClass
 from simplefilesettings.yaml import YAMLClass
 from simplefilesettings.json5 import JSON5Class
 
+
 class _TSettings(TOMLClass):
     name: str = "Tom"
 
     class Config:
         toml_file = os.path.join(os.path.expanduser("~"), "config.toml")
+
 
 class _YSettings(YAMLClass):
     name: str = "Ingy"
@@ -127,12 +135,12 @@ class _YSettings(YAMLClass):
     class Config:
         yaml_file = os.path.join(os.path.expanduser("~"), "config.yaml")
 
+
 class _JSettings(JSON5Class):
     name: str = "Douglas"
 
     class Config:
         json5_file = os.path.join(os.path.expanduser("~"), "config.jsonc")
-
 ```
 
 ## Development
