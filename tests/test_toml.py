@@ -13,7 +13,7 @@ def test_valid_file(temp_file: str) -> None:
         key1: str = "default1"
         key2: str = "default2"
 
-        class Config:
+        class Config:  # ty: ignore[invalid-attribute-override]
             toml_file = temp_file
 
     tc = TestClass()

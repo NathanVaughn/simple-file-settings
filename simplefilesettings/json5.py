@@ -23,5 +23,5 @@ class JSON5Class(BaseClass):
     def _write(self) -> None:
         return self._write_base(self._dumper_wrapper)
 
-    class Config(BaseClass.Config):
+    class Config(BaseClass.Config):  # ty: ignore[invalid-attribute-override]
         json5_file: PathLike = os.path.join(os.getcwd(), "settings.json")

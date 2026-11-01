@@ -60,7 +60,7 @@ def test_handle_invalid_syntax_file(temp_file: str) -> None:
         key1: str = "default1"
         key2: str = "default2"
 
-        class Config:
+        class Config:  # ty: ignore[invalid-attribute-override]
             json_file = temp_file
 
     tc = TestClass()
@@ -77,7 +77,7 @@ def test_handle_invalid_type_file(temp_file: str) -> None:
         key1: str = "default1"
         key2: str = "default2"
 
-        class Config:
+        class Config:  # ty: ignore[invalid-attribute-override]
             json_file = temp_file
 
     tc = TestClass()
@@ -94,7 +94,7 @@ def test_handle_invalid_empty_file(temp_file: str) -> None:
         key1: str = "default1"
         key2: str = "default2"
 
-        class Config:
+        class Config:  # ty: ignore[invalid-attribute-override]
             json_file = temp_file
 
     tc = TestClass()
@@ -113,7 +113,7 @@ def test_handle_invalid_field_type_file(temp_file: str) -> None:
         key1: str = "default1"
         key2: str = "default2"
 
-        class Config:
+        class Config:  # ty: ignore[invalid-attribute-override]
             json_file = temp_file
 
     tc = TestClass()
@@ -133,7 +133,7 @@ def test_invalid_enum_file(temp_file: str) -> None:
     class TestClass(JSONClass):
         key1: TestEnum = TestEnum.B
 
-        class Config:
+        class Config:  # ty: ignore[invalid-attribute-override]
             json_file = temp_file
 
     # make sure the default value is used
@@ -150,7 +150,7 @@ def test_invalid_datetime_file(temp_file: str) -> None:
     class TestClass(JSONClass):
         key1: datetime.datetime = datetime.datetime(2021, 1, 1, 0, 0, 0)
 
-        class Config:
+        class Config:  # ty: ignore[invalid-attribute-override]
             json_file = temp_file
 
     # make sure the default value is used
@@ -168,7 +168,7 @@ def test_valid_file(temp_file: str) -> None:
         key1: str = "default1"
         key2: str = "default2"
 
-        class Config:
+        class Config:  # ty: ignore[invalid-attribute-override]
             json_file = temp_file
 
     tc = TestClass()
@@ -186,7 +186,7 @@ def test_always_read_file(temp_file: str) -> None:
         key1: str = "default1"
         key2: str = "default2"
 
-        class Config:
+        class Config:  # ty: ignore[invalid-attribute-override]
             json_file = temp_file
             always_read = True
 
@@ -214,7 +214,7 @@ def test_not_always_read_file(temp_file: str) -> None:
         key1: str = "default1"
         key2: str = "default2"
 
-        class Config:
+        class Config:  # ty: ignore[invalid-attribute-override]
             json_file = temp_file
             always_read = False
 
@@ -242,7 +242,7 @@ def test_writing_value(temp_file: str) -> None:
         key1: str = "default1"
         key2: str = "default2"
 
-        class Config:
+        class Config:  # ty: ignore[invalid-attribute-override]
             json_file = temp_file
             always_read = False
 
@@ -283,7 +283,7 @@ def test_valid_file_2(temp_file: str) -> None:
         key1: TestEnum = TestEnum.B
         key2: datetime.datetime = datetime.datetime(2021, 1, 1, 0, 0, 0)
 
-        class Config:
+        class Config:  # ty: ignore[invalid-attribute-override]
             json_file = temp_file
 
     tc = TestClass()
@@ -301,7 +301,7 @@ def test_valid_file_3(temp_file: str) -> None:
         key1: str = "value1"
         key2: typing.Literal["value1", "value2"] = "value1"
 
-        class Config:
+        class Config:  # ty: ignore[invalid-attribute-override]
             json_file = temp_file
 
     tc = TestClass()
