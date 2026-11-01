@@ -16,5 +16,5 @@ class YAMLClass(BaseClass):
     def _write(self) -> None:
         return self._write_base(lambda obj, fp: yaml.dump(obj, fp))
 
-    class Config(BaseClass.Config):
+    class Config(BaseClass.Config):  # ty: ignore[invalid-attribute-override]
         yaml_file: PathLike = os.path.join(os.getcwd(), "settings.yaml")
